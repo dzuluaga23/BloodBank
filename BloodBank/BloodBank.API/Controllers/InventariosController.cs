@@ -20,7 +20,7 @@ namespace BloodBank.API.Controllers
         public async Task<ActionResult> Get()
         {
 
-            return Ok(await _context.Hospitales.ToListAsync());
+            return Ok(await _context.Inventarios.ToListAsync());
 
         }
 
@@ -28,38 +28,38 @@ namespace BloodBank.API.Controllers
         public async Task<ActionResult> Get(int id)
         {
 
-            var hospital = await _context.Hospitales.FirstOrDefaultAsync(x => x.Id == id);
-            if (hospital == null)
+            var inventario = await _context.Inventarios.FirstOrDefaultAsync(x => x.Id == id);
+            if (inventario == null)
             {
 
                 return NotFound();
             }
             else
             {
-                return Ok(hospital);
+                return Ok(inventario);
 
             }
         }
 
         [HttpPost]
 
-        public async Task<ActionResult> Post(Hospital hospital)
+        public async Task<ActionResult> Post(Inventario inventario)
         {
-            _context.Add(hospital);
+            _context.Add(inventario);
             await _context.SaveChangesAsync();
 
-            return Ok(hospital);
+            return Ok(inventario);
         }
 
         [HttpPut]
 
-        public async Task<ActionResult> Put(Hospital hospital)
+        public async Task<ActionResult> Put(Inventario inventario)
         {
 
-            _context.Update(hospital);
+            _context.Update(inventario);
             await _context.SaveChangesAsync();
 
-            return Ok(hospital);
+            return Ok(inventario);
         }
 
         [HttpDelete("{id:int}")]
