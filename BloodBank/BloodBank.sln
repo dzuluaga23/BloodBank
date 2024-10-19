@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodBank.Shared", "BloodBank.Shared\BloodBank.Shared.csproj", "{B344A9CD-C6CF-4900-ABA0-9FFC10555353}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodBank.Shared", "BloodBank.Shared\BloodBank.Shared.csproj", "{B344A9CD-C6CF-4900-ABA0-9FFC10555353}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodBank.API", "BloodBank.API\BloodBank.API.csproj", "{69C67B82-BB8B-48D0-927D-3B713B8A65B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodBank.API", "BloodBank.API\BloodBank.API.csproj", "{69C67B82-BB8B-48D0-927D-3B713B8A65B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodBank.WEB", "BloodBank.WEB\BloodBank.WEB.csproj", "{794FD99E-3BE4-4882-845C-FF9392B2E36F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodBank.WEB", "BloodBank.WEB\BloodBank.WEB.csproj", "{794FD99E-3BE4-4882-845C-FF9392B2E36F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
