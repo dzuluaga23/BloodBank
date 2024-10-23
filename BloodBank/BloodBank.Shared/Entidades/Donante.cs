@@ -42,7 +42,7 @@ namespace BloodBank.Shared.Entidades
 
         [Display(Name = "Fecha de Nacimiento")]
         [Required(ErrorMessage = "La fecha es obligatoria")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
 
