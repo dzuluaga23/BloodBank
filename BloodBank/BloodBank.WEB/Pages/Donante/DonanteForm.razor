@@ -1,0 +1,96 @@
+﻿@using BloodBank.Shared.Entidades
+<EditForm Model="Donante" OnSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label>Documento:</label>
+
+        <div>
+            <InputText width="10" @bind-Value="Donante.Documento" />
+            <ValidationMessage For="@(()=>Donante.Documento)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Nombre:</label>
+
+        <div>
+            <InputText width="50" @bind-Value="Donante.Nombre" />
+            <ValidationMessage For="@(()=>Donante.Nombre)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Apellido:</label>
+
+        <div>
+            <InputText width="50" @bind-Value="Donante.Apellido" />
+            <ValidationMessage For="@(()=>Donante.Apellido)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Imagen:</label>
+
+        <div>
+            <InputText @bind-Value="Donante.Imagen" />
+            <ValidationMessage For="@(()=>Donante.Imagen)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Correo:</label>
+
+        <div>
+            <InputText width="50" @bind-Value="Donante.Correo" />
+            <ValidationMessage For="@(()=>Donante.Correo)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Tipo de Sangre:</label>
+
+        <div>
+            <InputText width="3" @bind-Value="Donante.Sangre" />
+            <ValidationMessage For="@(()=>Donante.Sangre)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Fecha de Nacimiento:</label>
+
+        <div>
+            <InputDate @bind-Value="Donante.Fecha" />
+            <ValidationMessage For="@(()=>Donante.Fecha)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Telefono:</label>
+
+        <div>
+            <InputText width="10" @bind-Value="Donante.Telefono" />
+            <ValidationMessage For="@(()=>Donante.Telefono)" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <button class="btn btn-success" onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+
+@code {
+
+    [EditorRequired]
+    [Parameter]
+    public Donante Donante { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+
+    public EventCallback ReturnAction { get; set; }
+
+}
