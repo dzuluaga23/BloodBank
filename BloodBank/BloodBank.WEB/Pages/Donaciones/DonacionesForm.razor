@@ -1,0 +1,151 @@
+﻿@using BloodBank.Shared.Entidades
+
+@inject SweetAlertService swal
+
+<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
+
+<EditForm EditContext="editContext" OnSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label>Observacion:</label>
+        <div>
+            <InputText @bind-Value="Donacion.Observacion" />
+            <ValidationMessage For="@(()=>Donacion.Observacion)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Id Del Inventario:</label>
+        <div>
+            <InputNumber style="width: 50px;" @bind-Value="Donacion.InventarioId" />
+            <ValidationMessage For="@(()=>Donacion.InventarioId)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Id De la Cita:</label>
+        <div>
+            <InputNumber style="width: 50px;" @bind-Value="Donacion.CitaId" />
+            <ValidationMessage For="@(()=>Donacion.CitaId)" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
+
+
+</EditForm>
+
+
+@code {
+
+    //NOTA: SE CAMBIO EL BOTON DE REGRESAR
+
+    private EditContext editContext = null;
+
+    protected override void OnInitialized()
+
+    {
+        editContext = new(Donacion);
+
+    }
+
+
+
+
+
+    [EditorRequired]
+
+    [Parameter]
+
+    public Donacion Donacion { get; set; }
+
+
+
+
+
+    [EditorRequired]
+
+    [Parameter]
+
+    public EventCallback OnSubmit { get; set; }
+
+
+
+    [EditorRequired]
+
+    [Parameter]
+
+
+
+    public EventCallback ReturnAction { get; set; }
+
+
+
+
+
+    public bool FormPostedSuccessfully { get; set; } = true; // ESTO SE MODIFICO A TRUE
+
+
+
+
+
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+
+    {
+
+        var formWasEdited = editContext.IsModified();
+
+
+
+        if (!formWasEdited || FormPostedSuccessfully) //SE AGREGO ESTA LOGICA
+
+        {
+
+            return;
+
+        }
+
+
+
+        //EL PROBLEMA RADICA EN QUE NUNCA ENTRA AQUI Y EN LA WEB NO MUESTRA ESTE MENSAJE
+
+
+
+        var result = await swal.FireAsync(new SweetAlertOptions
+
+            {
+
+                Title = "Confirmación",
+
+                Text = "¿Deseas abandonar la página y perder los cambios?",
+
+                Icon = SweetAlertIcon.Warning,
+
+                ShowCancelButton = true
+
+            });
+
+
+
+        var confirm = !string.IsNullOrEmpty(result.Value);
+
+
+
+        if (confirm)
+
+        {
+
+            return;
+
+        }
+
+
+
+        context.PreventNavigation();
+
+    }
+
+}
+

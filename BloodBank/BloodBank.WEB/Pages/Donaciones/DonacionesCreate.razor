@@ -1,0 +1,60 @@
+﻿@page "/donaciones/create" 
+@inject IRepository repository 
+
+@inject NavigationManager navigationManager 
+
+@inject SweetAlertService sweetAlertService 
+
+<h3>Donacion Create</h3> 
+
+  
+
+<DonacionesForm @ref="donacionForm"  Donacion="donacion" OnSubmit="Create" ReturnAction="Return" /> 
+
+  
+
+@code { 
+
+    private Donacion donacion = new(); 
+
+    private DonacionesForm donacionForm; 
+
+  
+
+    private async Task Create() 
+
+    { 
+
+  
+
+        var responseHttp = await repository.PostAsync("/api/donaciones", donacion); 
+
+        if (responseHttp.Error) 
+
+        { 
+
+            var message = await responseHttp.GetErrorMessageAsync(); 
+
+            await sweetAlertService.FireAsync("Error", message); 
+
+            return; 
+
+        } 
+
+  
+
+        navigationManager.NavigateTo("/Donaciones"); 
+
+    } 
+
+  
+
+    private void Return() 
+
+    { 
+
+        navigationManager.NavigateTo("/Donaciones"); 
+
+    } 
+
+} 

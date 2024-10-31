@@ -1,0 +1,129 @@
+﻿@page "/donaciones/edit/{id:int}" 
+@inject NavigationManager navigationManager 
+@inject IRepository repository 
+@inject SweetAlertService swal 
+<h3>Donacion Edit</h3> 
+
+  
+
+@if(donacion is null) 
+
+{ 
+
+    <p>Cargando ...</p> 
+
+} 
+
+else 
+
+{ 
+
+    <DonacionesForm @ref="donacionForm"  Donacion="donacion" OnSubmit="Edit" ReturnAction="Return" /> 
+
+} 
+
+@code { 
+
+  
+
+    private Donacion donacion; 
+
+    private DonacionesForm donacionForm; 
+
+    [Parameter] 
+
+    public int Id { get; set; } 
+
+  
+
+    protected override async Task OnInitializedAsync() 
+
+    { 
+
+        var responseHTTP = await repository.GetAsync<Donacion>($"api/donaciones/{Id}"); 
+
+  
+
+        if (responseHTTP.Error) 
+
+        { 
+
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound) 
+
+            { 
+
+                navigationManager.NavigateTo("donaciones"); 
+
+            } 
+
+            else 
+
+            { 
+
+                var messageError = await responseHTTP.GetErrorMessageAsync(); 
+
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error); 
+
+            } 
+
+        } 
+
+        else 
+
+        { 
+
+            donacion = responseHTTP.Response; 
+
+        } 
+
+    } 
+
+  
+
+    private async Task Edit() 
+
+    { 
+
+        var responseHTTP = await repository.PutAsync("api/donaciones", donacion); 
+
+  
+
+        if (responseHTTP.Error) 
+
+        { 
+
+            var mensajeError = await responseHTTP.GetErrorMessageAsync(); 
+
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error); 
+
+        } 
+
+        else 
+
+        { 
+
+            donacionForm!.FormPostedSuccessfully = true; 
+
+            navigationManager.NavigateTo("donaciones"); 
+
+        } 
+
+    } 
+
+  
+
+    private void Return() 
+
+    { 
+
+        navigationManager.NavigateTo("donaciones"); 
+
+    } 
+
+} 
+
+ 
+
+ 
+
+ 

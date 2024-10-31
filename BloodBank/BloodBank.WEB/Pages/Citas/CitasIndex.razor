@@ -1,0 +1,132 @@
+﻿@page "/citas"
+@using CurrieTechnologies.Razor.SweetAlert2
+@using BloodBank.Shared.Entidades
+@using BloodBank.WEB.Repositories
+@using BloodBank.WEB.Shared
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
+
+<h3>Cita</h3>
+
+<div class="mb-3">
+    <a class="btn btn-primary" href="/citas/Create">Crear Cita</a>
+</div>
+
+<GenericList MyList="Citas">
+    <Body>
+        <table class="table table-striped">
+            <thead>
+
+                <tr>
+                    <th>Cita</th>
+                </tr>
+
+            </thead>
+            <tbody>
+
+                @foreach (var cita in Citas)
+                {
+                    <tr>
+                        <td>
+
+                            @cita.Fecha
+                        </td>
+
+                        <td>
+
+                            @cita.Hora
+
+                        </td>
+
+
+
+                        <td>
+
+                            @cita.Cantidad
+
+                        </td>
+
+
+
+                        <td>
+
+                            @cita.DonanteId
+
+                        </td>
+
+
+
+                        <td>
+
+                            @cita.EnfermeroId
+
+                        </td>
+                      
+                        <td>
+
+                            <a href="/Citas/edit/@cita.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+
+                            <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(cita))><i class="oi oi-trash" /> Borrar</button>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+
+    </Body>
+</GenericList>
+
+@code {
+    public List<Cita> Citas { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        var responseHppt = await repository.GetAsync<List<Cita>>("/api/Citas");
+        Citas = responseHppt.Response!;
+    }
+
+    private async Task DeleteAsync(Cita Cita)
+    {
+        var result = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = "¿Esta seguro que quieres borrar el registro?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+            });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHTTP = await repository.DeleteAsync<Cita>($"api/Citas/{Cita.Id}");
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.GetErrorMessageAsync();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Load();
+        }
+    }
+}

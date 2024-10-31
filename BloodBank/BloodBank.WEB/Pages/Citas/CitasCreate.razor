@@ -1,0 +1,60 @@
+﻿@page "/citas/create" 
+@inject IRepository repository 
+
+@inject NavigationManager navigationManager 
+
+@inject SweetAlertService sweetAlertService 
+
+<h3>Cita Create</h3> 
+
+  
+
+<CitasForm @ref="citaForm"  Cita="cita" OnSubmit="Create" ReturnAction="Return" /> 
+
+  
+
+@code { 
+
+    private Cita cita = new(); 
+
+    private CitasForm citaForm; 
+
+  
+
+    private async Task Create() 
+
+    { 
+
+  
+
+        var responseHttp = await repository.PostAsync("/api/citas", cita); 
+
+        if (responseHttp.Error) 
+
+        { 
+
+            var message = await responseHttp.GetErrorMessageAsync(); 
+
+            await sweetAlertService.FireAsync("Error", message); 
+
+            return; 
+
+        } 
+
+  
+
+        navigationManager.NavigateTo("/Citas"); 
+
+    } 
+
+  
+
+    private void Return() 
+
+    { 
+
+        navigationManager.NavigateTo("/Citas"); 
+
+    } 
+
+} 
