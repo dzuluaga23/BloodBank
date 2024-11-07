@@ -1,0 +1,55 @@
+﻿@page "/hospitales/create" 
+
+@inject IRepository repository 
+
+@inject NavigationManager navigationManager 
+ 
+@inject SweetAlertService sweetAlertService 
+
+<h3>HOSPITAL</h3> 
+
+  
+
+<HospitalForm @ref="hospitalForm"  Hospital="hospital" OnSubmit="Create" ReturnAction="Return" /> 
+
+  
+
+@code { 
+
+    private Hospital hospital = new(); 
+
+    private HospitalForm hospitalForm; 
+
+    private async Task Create() 
+
+    { 
+
+        var responseHttp = await repository.PostAsync("/api/hospitales", hospital); 
+
+        if (responseHttp.Error) 
+
+        { 
+
+            var message = await responseHttp.GetErrorMessageAsync(); 
+
+            await sweetAlertService.FireAsync("Error", message); 
+
+            return; 
+
+        } 
+
+        navigationManager.NavigateTo("/hospitales"); 
+
+    } 
+
+    private void Return() 
+
+    { 
+
+        navigationManager.NavigateTo("/hospitales"); 
+
+    } 
+
+} 
+
+ 

@@ -1,0 +1,233 @@
+﻿
+@page "/hospitales" 
+
+  
+
+  
+
+@using CurrieTechnologies.Razor.SweetAlert2 
+
+@using BloodBank.Shared.Entidades
+
+@using BloodBank.WEB.Repositories 
+
+@using BloodBank.WEB.Shared 
+
+  
+
+@inject IRepository repository 
+
+@inject NavigationManager navigationManager 
+
+@inject SweetAlertService swal 
+
+  
+
+<h3>HOSPITAL</h3> 
+
+  
+
+  
+
+<div class ="mb-3"> 
+
+  
+
+<a class="btn btn-primary" href="/hospitales/Create">Crear Hospital</a> 
+
+</div> 
+
+  
+
+  
+
+<GenericList MyList="hospitales">  
+
+    <Body> 
+
+        <table class="table table-striped">  
+
+            <thead> 
+
+                <tr> 
+
+                    <th>Hospital</th> 
+
+                </tr> 
+
+  
+
+            </thead> 
+
+            <tbody> 
+
+                    @foreach(var hospital in hospitales) 
+
+                    { 
+
+                        <tr> 
+
+                            <td> 
+
+                                @hospital.Nombre
+
+                            </td> 
+
+  
+
+                             <td> 
+
+                                @hospital.Direccion
+
+                            </td> 
+
+  
+
+                            <td> 
+
+                                @hospital.Telefono
+
+                             </td> 
+
+
+                            <td> 
+
+                                 <a href="/hospitales/edit/@hospital.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a> 
+
+                                 <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(hospital))><i class="oi oi-trash" /> Borrar</button> 
+
+  
+
+  
+
+                            </td> 
+
+  
+
+                        </tr> 
+
+                    } 
+
+                </tbody> 
+
+  
+
+  
+
+  
+
+        </table> 
+
+  
+
+    </Body> 
+
+  
+
+</GenericList> 
+
+  
+
+@code { 
+
+  
+
+    public List <Hospital> hospitales { get; set; } 
+
+  
+
+    protected async override Task OnInitializedAsync() 
+
+    { 
+
+        await Load(); 
+
+    } 
+
+  
+
+    private async Task Load() 
+
+    { 
+
+        var responseHppt = await repository.GetAsync<List<Hospital>>("/api/hospitales"); 
+
+        hospitales = responseHppt.Response!; 
+
+    } 
+
+  
+
+    private async Task DeleteAsync(Hospital hospital) 
+
+    { 
+
+        var result = await swal.FireAsync(new SweetAlertOptions 
+
+            { 
+
+                Title = "Confirmación", 
+
+                Text = "¿Esta seguro que quieres borrar el registro?", 
+
+                Icon = SweetAlertIcon.Question, 
+
+                ShowCancelButton = true 
+
+            }); 
+
+  
+
+        var confirm = string.IsNullOrEmpty(result.Value); 
+
+  
+
+        if (confirm) 
+
+        { 
+
+            return; 
+
+        } 
+
+  
+
+        var responseHTTP = await repository.DeleteAsync<Hospital>($"api/hospitales/{hospital.Id}"); 
+
+  
+
+        if (responseHTTP.Error) 
+
+        { 
+
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound) 
+
+            { 
+
+                navigationManager.NavigateTo("/"); 
+
+            } 
+
+            else 
+
+            { 
+
+                var mensajeError = await responseHTTP.GetErrorMessageAsync(); 
+
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error); 
+
+            } 
+
+        } 
+
+        else 
+
+        { 
+
+            await Load(); 
+
+        } 
+
+    } 
+
+} 

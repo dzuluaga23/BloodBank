@@ -1,0 +1,107 @@
+﻿
+
+
+@page "/hospitales/edit/{id:int}" 
+
+@inject NavigationManager navigationManager 
+
+@inject IRepository repository 
+
+@inject SweetAlertService swal 
+
+<h3>EDITAR HOSPITAL</h3> 
+
+@if(hospital is null) 
+
+{ 
+    <p>Cargando ...</p> 
+} 
+
+else 
+
+{ 
+    <HospitalForm @ref="hospitalForm"  Hospital="hospital" OnSubmit="Edit" ReturnAction="Return" /> 
+} 
+
+@code { 
+
+    private Hospital hospital; 
+
+    private HospitalForm hospitalForm; 
+
+    [Parameter] 
+
+    public int Id { get; set; } 
+
+    protected override async Task OnInitializedAsync() 
+
+    { 
+        var responseHTTP = await repository.GetAsync<Hospital>($"api/hospitales/{Id}"); 
+
+        if (responseHTTP.Error) 
+
+        { 
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound) 
+
+            { 
+
+                navigationManager.NavigateTo("hospitales"); 
+
+            } 
+
+            else 
+
+            { 
+
+                var messageError = await responseHTTP.GetErrorMessageAsync(); 
+
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error); 
+
+            } 
+
+        } 
+
+        else 
+
+        { 
+
+            hospital = responseHTTP.Response; 
+
+        } 
+
+    } 
+
+    private async Task Edit() 
+
+    { 
+        var responseHTTP = await repository.PutAsync("api/hospitales", hospital); 
+
+        if (responseHTTP.Error) 
+
+        { 
+            var mensajeError = await responseHTTP.GetErrorMessageAsync(); 
+
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error); 
+
+        } 
+
+        else 
+
+        { 
+            hospitalForm!.FormPostedSuccessfully = true; 
+
+            navigationManager.NavigateTo("hospitales"); 
+
+        } 
+
+    } 
+
+    private void Return() 
+
+    { 
+
+        navigationManager.NavigateTo("hospitales"); 
+
+    } 
+
+} 
