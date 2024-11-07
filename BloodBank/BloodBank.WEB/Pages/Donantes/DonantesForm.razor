@@ -1,9 +1,14 @@
 ﻿@using BloodBank.Shared.Entidades
-<EditForm Model="Donante" OnSubmit="OnSubmit">
+
+@inject SweetAlertService swal
+
+<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
+
+<EditForm EditContext="editContext" OnSubmit="OnSubmit">
     <DataAnnotationsValidator />
+
     <div class="mb-3">
         <label>Documento:</label>
-
         <div>
             <InputText width="10" @bind-Value="Donante.Documento" />
             <ValidationMessage For="@(()=>Donante.Documento)" />
@@ -12,7 +17,6 @@
 
     <div class="mb-3">
         <label>Nombre:</label>
-
         <div>
             <InputText width="50" @bind-Value="Donante.Nombre" />
             <ValidationMessage For="@(()=>Donante.Nombre)" />
@@ -21,7 +25,6 @@
 
     <div class="mb-3">
         <label>Apellido:</label>
-
         <div>
             <InputText width="50" @bind-Value="Donante.Apellido" />
             <ValidationMessage For="@(()=>Donante.Apellido)" />
@@ -29,8 +32,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Imagen:</label>
-
+        <label>Foto:</label>
         <div>
             <InputText @bind-Value="Donante.Imagen" />
             <ValidationMessage For="@(()=>Donante.Imagen)" />
@@ -39,7 +41,6 @@
 
     <div class="mb-3">
         <label>Correo:</label>
-
         <div>
             <InputText width="50" @bind-Value="Donante.Correo" />
             <ValidationMessage For="@(()=>Donante.Correo)" />
@@ -47,8 +48,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Tipo de Sangre:</label>
-
+        <label>Sangre:</label>
         <div>
             <InputText width="3" @bind-Value="Donante.Sangre" />
             <ValidationMessage For="@(()=>Donante.Sangre)" />
@@ -57,7 +57,6 @@
 
     <div class="mb-3">
         <label>Fecha de Nacimiento:</label>
-
         <div>
             <InputDate @bind-Value="Donante.Fecha" />
             <ValidationMessage For="@(()=>Donante.Fecha)" />
@@ -66,7 +65,6 @@
 
     <div class="mb-3">
         <label>Telefono:</label>
-
         <div>
             <InputText width="10" @bind-Value="Donante.Telefono" />
             <ValidationMessage For="@(()=>Donante.Telefono)" />
@@ -74,23 +72,120 @@
     </div>
 
     <button class="btn btn-primary" type="submit">Guardar</button>
-    <button class="btn btn-success" onclick="ReturnAction">Regresar</button>
+    <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
+
+
 </EditForm>
 
 
 @code {
 
+    //NOTA: SE CAMBIO EL BOTON DE REGRESAR
+
+    private EditContext editContext = null;
+
+    protected override void OnInitialized()
+
+    {
+        editContext = new(Donante);
+
+    }
+
+
+
+
+
     [EditorRequired]
+
     [Parameter]
+
     public Donante Donante { get; set; }
 
-    [EditorRequired]
-    [Parameter]
-    public EventCallback OnSubmit { get; set; }
+
+
+
 
     [EditorRequired]
+
     [Parameter]
+
+    public EventCallback OnSubmit { get; set; }
+
+
+
+    [EditorRequired]
+
+    [Parameter]
+
+
 
     public EventCallback ReturnAction { get; set; }
 
+
+
+
+
+    public bool FormPostedSuccessfully { get; set; } = true; // ESTO SE MODIFICO A TRUE
+
+
+
+
+
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+
+    {
+
+        var formWasEdited = editContext.IsModified();
+
+
+
+        if (!formWasEdited || FormPostedSuccessfully) //SE AGREGO ESTA LOGICA
+
+        {
+
+            return;
+
+        }
+
+
+
+        //EL PROBLEMA RADICA EN QUE NUNCA ENTRA AQUI Y EN LA WEB NO MUESTRA ESTE MENSAJE
+
+
+
+        var result = await swal.FireAsync(new SweetAlertOptions
+
+            {
+
+                Title = "Confirmación",
+
+                Text = "¿Deseas abandonar la página y perder los cambios?",
+
+                Icon = SweetAlertIcon.Warning,
+
+                ShowCancelButton = true
+
+            });
+
+
+
+        var confirm = !string.IsNullOrEmpty(result.Value);
+
+
+
+        if (confirm)
+
+        {
+
+            return;
+
+        }
+
+
+
+        context.PreventNavigation();
+
+    }
+
 }
+

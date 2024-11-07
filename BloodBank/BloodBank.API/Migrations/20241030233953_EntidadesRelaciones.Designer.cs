@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloodBank.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241023174630_cambioFecha")]
-    partial class cambioFecha
+    [Migration("20241030233953_EntidadesRelaciones")]
+    partial class EntidadesRelaciones
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
