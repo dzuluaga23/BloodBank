@@ -1,0 +1,55 @@
+﻿@page "/inventarios/create" 
+
+@inject IRepository repository 
+
+@inject NavigationManager navigationManager 
+ 
+@inject SweetAlertService sweetAlertService 
+
+<h3>INVENTARIO</h3> 
+
+  
+
+<InventarioForm @ref="inventarioForm"  Inventario="inventario" OnSubmit="Create" ReturnAction="Return" /> 
+
+  
+
+@code { 
+
+    private Inventario inventario = new(); 
+
+    private InventarioForm inventarioForm; 
+
+    private async Task Create() 
+
+    { 
+
+        var responseHttp = await repository.PostAsync("/api/inventarios", inventario); 
+
+        if (responseHttp.Error) 
+
+        { 
+
+            var message = await responseHttp.GetErrorMessageAsync(); 
+
+            await sweetAlertService.FireAsync("Error", message); 
+
+            return; 
+
+        } 
+
+        navigationManager.NavigateTo("/inventarios"); 
+
+    } 
+
+    private void Return() 
+
+    { 
+
+        navigationManager.NavigateTo("/inventarios"); 
+
+    } 
+
+} 
+
+ 
