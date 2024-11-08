@@ -1,4 +1,6 @@
 ﻿@using BloodBank.Shared.Entidades
+@inject IRepository repository
+
 
 @inject SweetAlertService swal
 
@@ -31,12 +33,20 @@
         </div>
     </div>
 
-   <div class="mb-3">
-            <label>Id Del Donante:</label>
-            <div>
-                <InputNumber style="width: 50px;" @bind-Value="Cita.DonanteId" />
-                <ValidationMessage For="@(()=>Cita.DonanteId)" />
-            </div>
+  
+
+    <div class="mb-3">
+        <label>Donante:</label>
+        <div>
+            <InputSelect @bind-Value="Cita.DonanteId" class="form-control">
+                <option value="">Selecciona un donante</option>
+                @foreach (var donante in Donantes)
+                {
+                    <option value="@donante.Id">@donante.Nombre</option> <!-- Asegúrate que Donante tenga propiedades Id y Nombre -->
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => Cita.DonanteId)" />
+        </div>
     </div>
 
     <div class="mb-3">
@@ -65,6 +75,17 @@
     {
         editContext = new(Cita);
 
+    }
+
+    private List<Donante> Donantes { get; set; } = new List<Donante>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await repository.GetDonantesAsync();
+        if (!response.Error && response.Response != null)
+        {
+            Donantes = response.Response;
+        }
     }
 
 

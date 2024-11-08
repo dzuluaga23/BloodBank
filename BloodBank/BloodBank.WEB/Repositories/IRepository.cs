@@ -1,4 +1,6 @@
-﻿namespace BloodBank.WEB.Repositories
+﻿using BloodBank.Shared.Entidades;
+
+namespace BloodBank.WEB.Repositories
 {
     public interface IRepository
     {
@@ -13,5 +15,7 @@
         Task<HttpResponseWrapper<TResponse>> PutAsync<T, TResponse>(string url, T model);
 
         Task<HttpResponseWrapper<object>> DeleteAsync<T>(string url);
+        Task<HttpResponseWrapper<List<Donante>>> GetDonantesAsync();
+
     }
 }

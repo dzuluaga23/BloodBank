@@ -1,6 +1,7 @@
 ﻿
 using System.Text.Json;
 using System.Text;
+using BloodBank.Shared.Entidades;
 
 namespace BloodBank.WEB.Repositories
 {
@@ -147,5 +148,11 @@ namespace BloodBank.WEB.Repositories
             return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);//204 
 
         }
+
+        public async Task<HttpResponseWrapper<List<Donante>>> GetDonantesAsync()
+        {
+            return await GetAsync<List<Donante>>("/api/donantes");
+        }
+
     }
 }
