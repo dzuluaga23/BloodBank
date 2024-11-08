@@ -1,0 +1,55 @@
+﻿@page "/enfermeros/create" 
+
+@inject IRepository repository 
+
+@inject NavigationManager navigationManager 
+ 
+@inject SweetAlertService sweetAlertService 
+
+<h3>ENFERMERO</h3> 
+
+  
+
+<EnfermeroForm @ref="enfermeroForm"  Enfermero="enfermero" OnSubmit="Create" ReturnAction="Return" /> 
+
+  
+
+@code { 
+
+    private Enfermero enfermero = new(); 
+
+    private EnfermeroForm enfermeroForm; 
+
+    private async Task Create() 
+
+    { 
+
+        var responseHttp = await repository.PostAsync("/api/enfermeros", enfermero); 
+
+        if (responseHttp.Error) 
+
+        { 
+
+            var message = await responseHttp.GetErrorMessageAsync(); 
+
+            await sweetAlertService.FireAsync("Error", message); 
+
+            return; 
+
+        } 
+
+        navigationManager.NavigateTo("/enfermeros"); 
+
+    } 
+
+    private void Return() 
+
+    { 
+
+        navigationManager.NavigateTo("/enfermeros"); 
+
+    } 
+
+} 
+
+ 

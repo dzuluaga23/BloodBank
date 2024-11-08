@@ -1,0 +1,110 @@
+﻿
+
+
+@page "/enfermeros/edit/{id:int}" 
+
+@inject NavigationManager navigationManager 
+
+@inject IRepository repository 
+
+@inject SweetAlertService swal 
+
+<h3>EDITAR ENFERMEROS</h3> 
+
+@if(enfermero is null) 
+
+{ 
+    <p>Cargando ...</p> 
+} 
+
+else 
+
+{ 
+    <EnfermeroForm @ref="enfermeroForm"  Enfermero="enfermero" OnSubmit="Edit" ReturnAction="Return" /> 
+} 
+
+@code { 
+
+    private Enfermero enfermero; 
+
+    private EnfermeroForm enfermeroForm; 
+
+    [Parameter] 
+
+    public int Id { get; set; } 
+
+    protected override async Task OnInitializedAsync() 
+
+    { 
+
+        var responseHTTP = await repository.GetAsync<Enfermero>($"api/enfermeros/{Id}"); 
+
+        if (responseHTTP.Error) 
+
+        { 
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound) 
+
+            { 
+
+                navigationManager.NavigateTo("enfermeros"); 
+
+            } 
+
+            else 
+
+            { 
+
+                var messageError = await responseHTTP.GetErrorMessageAsync(); 
+
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error); 
+
+            } 
+
+        } 
+
+        else 
+
+        { 
+
+            enfermero = responseHTTP.Response; 
+
+        } 
+
+    } 
+
+    private async Task Edit() 
+
+    { 
+        var responseHTTP = await repository.PutAsync("api/enfermeros", enfermero); 
+
+        if (responseHTTP.Error) 
+
+        { 
+
+            var mensajeError = await responseHTTP.GetErrorMessageAsync(); 
+
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error); 
+
+        } 
+
+        else 
+
+        { 
+
+            enfermeroForm!.FormPostedSuccessfully = true; 
+
+            navigationManager.NavigateTo("enfermeros"); 
+
+        } 
+
+    } 
+
+    private void Return() 
+
+    { 
+
+        navigationManager.NavigateTo("enfermeros"); 
+
+    } 
+
+} 
