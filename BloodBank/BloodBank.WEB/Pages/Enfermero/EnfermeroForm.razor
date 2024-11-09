@@ -1,6 +1,5 @@
-﻿
-
-@using BloodBank.Shared.Entidades
+﻿@using BloodBank.Shared.Entidades
+@inject IRepository repository
 
 @inject SweetAlertService swal
 
@@ -57,6 +56,20 @@
             <ValidationMessage For="@(()=>Enfermero.Correo)" />
         </div>
     </div>
+
+    <div class="mb-3">
+        <label>Hospital:</label>
+        <div>
+            <InputSelect @bind-Value="Enfermero.HospitalId" class="form-control">
+                <option value="">Selecciona un hospital</option>
+                @foreach (var hospital in Hospitales)
+                {
+                    <option value="@hospital.Id">@hospital.Nombre</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => Enfermero.HospitalId)" />
+        </div>
+    </div>
    
          <button class="btn btn-primary" type="submit">Guardar</button>
          <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
@@ -73,6 +86,17 @@
 
         editContext = new(Enfermero);
 
+    }
+
+    private List<Hospital> Hospitales { get; set; } = new List<Hospital>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await repository.GetHospitalesAsync();
+        if (!response.Error && response.Response != null)
+        {
+            Hospitales = response.Response;
+        }
     }
 
     [EditorRequired]

@@ -16,6 +16,14 @@ namespace BloodBank.WEB.Repositories
 
         Task<HttpResponseWrapper<object>> DeleteAsync<T>(string url);
         Task<HttpResponseWrapper<List<Donante>>> GetDonantesAsync();
+        Task<HttpResponseWrapper<List<Enfermero>>> GetEnfermerosAsync();
+        Task<HttpResponseWrapper<List<Hospital>>> GetHospitalesAsync();
+        Task<HttpResponseWrapper<List<Inventario>>> GetInventariosAsync();
+        Task<HttpResponseWrapper<List<Cita>>> GetCitasAsync();
+
+
+
+
 
     }
 }

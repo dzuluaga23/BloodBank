@@ -1,19 +1,9 @@
-﻿
-@page "/hospitales" 
-
-  
-
-  
+﻿@page "/hospitales" 
 
 @using CurrieTechnologies.Razor.SweetAlert2 
-
 @using BloodBank.Shared.Entidades
-
 @using BloodBank.WEB.Repositories 
-
 @using BloodBank.WEB.Shared 
-
-  
 
 @inject IRepository repository 
 
@@ -87,10 +77,16 @@
 
                                 @hospital.Telefono
 
-                             </td> 
+                             </td>
+
+                            <td>
+
+                                @hospital.InventarioId
+
+                             </td>
 
 
-                            <td> 
+                        <td> 
 
                                  <a href="/hospitales/edit/@hospital.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a> 
 
