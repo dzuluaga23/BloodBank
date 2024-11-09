@@ -28,15 +28,21 @@
     </div>
 
     <div class="mb-3">
-
-        <label>Tipo:</label>
-
+        <label>Tipo de Sangre:</label>
         <div>
+            <InputSelect @bind-Value="Inventario.Tipo">
+                <option value="">Selecciona tu tipo de sangre</option>
+                <option value="1">A+</option>
+                <option value="2">O+</option>
+                <option value="3">B+</option>
+                <option value="4">AB+</option>
+                <option value="5">A-</option>
+                <option value="6">O-</option>
+                <option value="7">B-</option>
+                <option value="8">AB-</option>
 
-            <InputText width="30" @bind-Value="Inventario.Tipo" />
-
-            <ValidationMessage For="@(()=>Inventario.Tipo)" />
-
+            </InputSelect>
+            <ValidationMessage For="@(() => Inventario.Tipo)" />
         </div>
     </div>
 

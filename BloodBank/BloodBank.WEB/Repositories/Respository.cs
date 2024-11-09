@@ -154,5 +154,25 @@ namespace BloodBank.WEB.Repositories
             return await GetAsync<List<Donante>>("/api/donantes");
         }
 
+        public async Task<HttpResponseWrapper<List<Enfermero>>> GetEnfermerosAsync()
+        {
+            return await GetAsync<List<Enfermero>>("/api/enfermeros");
+        }
+
+        public async Task<HttpResponseWrapper<List<Hospital>>> GetHospitalesAsync()
+        {
+            return await GetAsync<List<Hospital>>("/api/hospitales");
+        }
+
+        public async Task<HttpResponseWrapper<List<Inventario>>> GetInventariosAsync()
+        {
+            return await GetAsync<List<Inventario>>("/api/inventarios");
+        }
+
+        public async Task<HttpResponseWrapper<List<Cita>>> GetCitasAsync()
+        {
+            return await GetAsync<List<Cita>>("/api/citas");
+        }
+
     }
 }

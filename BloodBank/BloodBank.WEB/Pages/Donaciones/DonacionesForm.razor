@@ -1,4 +1,5 @@
 ﻿@using BloodBank.Shared.Entidades
+@inject IRepository repository
 
 @inject SweetAlertService swal
 
@@ -16,18 +17,30 @@
     </div>
 
     <div class="mb-3">
-        <label>Id Del Inventario:</label>
+        <label>Inventario:</label>
         <div>
-            <InputNumber style="width: 50px;" @bind-Value="Donacion.InventarioId" />
-            <ValidationMessage For="@(()=>Donacion.InventarioId)" />
+            <InputSelect @bind-Value="Donacion.InventarioId" class="form-control">
+                <option value="">Selecciona un inventario</option>
+                @foreach (var inventario in Inventarios)
+                {
+                    <option value="@inventario.Id">@inventario.Tipo</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => Donacion.InventarioId)" />
         </div>
     </div>
 
     <div class="mb-3">
-        <label>Id De la Cita:</label>
+        <label>Cita:</label>
         <div>
-            <InputNumber style="width: 50px;" @bind-Value="Donacion.CitaId" />
-            <ValidationMessage For="@(()=>Donacion.CitaId)" />
+            <InputSelect @bind-Value="Donacion.CitaId" class="form-control">
+                <option value="">Selecciona una cita</option>
+                @foreach (var cita in Citas)
+                {
+                    <option value="@cita.Id">@cita.Fecha</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => Donacion.CitaId)" />
         </div>
     </div>
 
@@ -51,9 +64,24 @@
 
     }
 
+    private List<Inventario> Inventarios { get; set; } = new List<Inventario>();
+    private List<Cita> Citas { get; set; } = new List<Cita>();
 
 
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await repository.GetInventariosAsync();
+        if (!response.Error && response.Response != null)
+        {
+            Inventarios = response.Response;
+        }
+        var responseCita = await repository.GetCitasAsync();
+        if (!responseCita.Error && responseCita.Response != null)
+        {
+            Citas = responseCita.Response;
+        }
 
+    }
 
     [EditorRequired]
 

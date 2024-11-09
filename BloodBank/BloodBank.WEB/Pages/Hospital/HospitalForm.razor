@@ -1,6 +1,7 @@
 ﻿
 
 @using BloodBank.Shared.Entidades
+@inject IRepository repository
 
 @inject SweetAlertService swal
 
@@ -50,6 +51,22 @@
         </div>
     </div>
 
+    <div class="mb-3">
+        <label>Inventario:</label>
+        <div>
+            <InputSelect @bind-Value="Hospital.InventarioId" class="form-control">
+                <option value="">Selecciona un inventario</option>
+                @foreach (var inventario in Inventarios)
+                {
+                    <option value="@inventario.Id">@inventario.Tipo</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => Hospital.InventarioId)" />
+        </div>
+    </div>
+
+
+
          <button class="btn btn-primary" type="submit">Guardar</button>
          <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
 
@@ -65,6 +82,17 @@
 
         editContext = new(Hospital);
 
+    }
+
+    private List<Inventario> Inventarios { get; set; } = new List<Inventario>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await repository.GetInventariosAsync();
+        if (!response.Error && response.Response != null)
+        {
+            Inventarios = response.Response;
+        }
     }
 
     [EditorRequired]

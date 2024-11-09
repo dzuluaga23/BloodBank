@@ -42,7 +42,7 @@
                 <option value="">Selecciona un donante</option>
                 @foreach (var donante in Donantes)
                 {
-                    <option value="@donante.Id">@donante.Nombre</option> <!-- Asegúrate que Donante tenga propiedades Id y Nombre -->
+                    <option value="@donante.Id">@donante.Nombre</option> 
                 }
             </InputSelect>
             <ValidationMessage For="@(() => Cita.DonanteId)" />
@@ -50,10 +50,16 @@
     </div>
 
     <div class="mb-3">
-        <label>Id Del Enfermero:</label>
+        <label>Enfermero:</label>
         <div>
-            <InputNumber style="width: 50px;" @bind-Value="Cita.EnfermeroId" />
-            <ValidationMessage For="@(()=>Cita.EnfermeroId)" />
+            <InputSelect @bind-Value="Cita.EnfermeroId" class="form-control">
+                <option value="">Selecciona un enfermero</option>
+                @foreach (var enfermero in Enfermeros)
+                {
+                    <option value="@enfermero.Id">@enfermero.Nombre</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => Cita.EnfermeroId)" />
         </div>
     </div>
 
@@ -78,19 +84,22 @@
     }
 
     private List<Donante> Donantes { get; set; } = new List<Donante>();
+    private List<Enfermero> Enfermeros { get; set; } = new List<Enfermero>();
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await repository.GetDonantesAsync();
-        if (!response.Error && response.Response != null)
+        var responseDonantes = await repository.GetDonantesAsync();
+        if (!responseDonantes.Error && responseDonantes.Response != null)
         {
-            Donantes = response.Response;
+            Donantes = responseDonantes.Response;
+        }
+
+        var responseEnfermeros = await repository.GetEnfermerosAsync();
+        if (!responseEnfermeros.Error && responseEnfermeros.Response != null)
+        {
+            Enfermeros = responseEnfermeros.Response;
         }
     }
-
-
-
-
 
     [EditorRequired]
 
