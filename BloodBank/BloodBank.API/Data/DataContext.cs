@@ -1,10 +1,11 @@
 ﻿using BloodBank.Shared.Entidades;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 
 namespace BloodBank.API.Data
 {
-    public class DataContext:DbContext
+    public class DataContext:IdentityDbContext<User>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
