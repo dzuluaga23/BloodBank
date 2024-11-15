@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloodBank.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241114201317_Users")]
-    partial class Users
+    [Migration("20241115132252_yhann")]
+    partial class yhann
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
