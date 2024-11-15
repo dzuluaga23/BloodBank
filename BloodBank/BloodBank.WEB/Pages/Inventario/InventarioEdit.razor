@@ -9,6 +9,9 @@
 
 @inject SweetAlertService swal 
 
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+
 <h3>EDITAR INVENTARIO</h3> 
 
 @if(inventario is null) 

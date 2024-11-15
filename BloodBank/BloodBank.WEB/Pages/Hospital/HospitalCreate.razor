@@ -5,6 +5,8 @@
 @inject NavigationManager navigationManager 
  
 @inject SweetAlertService sweetAlertService 
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
 
 <h3>HOSPITAL</h3> 
 

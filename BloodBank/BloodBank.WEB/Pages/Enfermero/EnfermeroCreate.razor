@@ -1,10 +1,13 @@
 ﻿@page "/enfermeros/create" 
+@using Microsoft.AspNetCore.Authorization
 
 @inject IRepository repository 
 
 @inject NavigationManager navigationManager 
  
 @inject SweetAlertService sweetAlertService 
+
+@attribute [Authorize(Roles = "Admin")]
 
 <h3>ENFERMERO</h3> 
 
