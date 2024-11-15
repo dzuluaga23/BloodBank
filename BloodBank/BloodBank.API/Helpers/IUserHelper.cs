@@ -1,4 +1,5 @@
-﻿using BloodBank.Shared.Entidades;
+﻿using BloodBank.Shared.DTOs;
+using BloodBank.Shared.Entidades;
 using Microsoft.AspNetCore.Identity;
 
 namespace BloodBank.API.Helpers
@@ -10,5 +11,7 @@ namespace BloodBank.API.Helpers
         Task CheckRoleAsync(string roleName);
         Task AddUserToRoleAsync(User user, string roleName);
         Task<bool> IsUserInRoleAsync(User user, string roleName);
+        Task<SignInResult> LoginAsync(LoginDTO model);
+        Task LogoutAsync();
     }
 }
