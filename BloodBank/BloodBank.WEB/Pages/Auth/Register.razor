@@ -1,4 +1,4 @@
-﻿
+﻿@using BloodBank.WEB.Shared
 @page "/Register"
 @using BloodBank.Shared.DTOs;
 @using BloodBank.Shared.Enums;
@@ -89,9 +89,9 @@
                         </div>
                     </div>
 
-
-
-
+                    <div class="mb-3">
+                        <InputImg Label="Foto" ImageSelected="ImageSelected" ImageURL="@imageUrl" />
+                    </div>
 
                 </div>
             </div>
@@ -103,8 +103,26 @@
 </EditForm>
 @code {
     private UserDTO userDTO = new();
-    private string imageUrl;
+    private List<Donante>? Donantes;
+    private bool loading;
+    private string? imageUrl;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await OnInitializedAsync();
+
+        if (!string.IsNullOrEmpty(userDTO.Photo))
+        {
+            imageUrl = userDTO.Photo;
+            userDTO.Photo = null;
+        }
+    }
+
+    private void ImageSelected(string imagenBase64)
+    {
+        userDTO.Photo = imagenBase64;
+        imageUrl = null;
+    }
 
     private async Task CreateUserAsync()
     {
