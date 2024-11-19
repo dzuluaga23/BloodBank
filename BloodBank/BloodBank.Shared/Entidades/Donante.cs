@@ -26,9 +26,6 @@ namespace BloodBank.Shared.Entidades
         [Required(ErrorMessage = "El Apellido es obligatorio")]
         public string Apellido { get; set; }
 
-        [Display(Name = "Foto del donante")]
-        public string Imagen { get; set; }
-
         [Display(Name = "Correo Electrónico")]
         [MaxLength(50, ErrorMessage = "El correo no puede tener más de 50 caracteres.")]
         [Required(ErrorMessage = "El correo es obligatorio")]
