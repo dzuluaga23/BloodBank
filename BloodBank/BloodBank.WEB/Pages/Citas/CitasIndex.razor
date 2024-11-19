@@ -6,7 +6,8 @@
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService swal
-
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
 <h3>CITA</h3>
 
 <div class="mb-3">

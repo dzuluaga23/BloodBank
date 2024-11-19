@@ -8,6 +8,8 @@
 @inject IRepository repository 
 
 @inject SweetAlertService swal 
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
 
 <h3>EDITAR HOSPITAL</h3> 
 

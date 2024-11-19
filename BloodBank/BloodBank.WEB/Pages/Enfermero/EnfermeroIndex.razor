@@ -11,6 +11,7 @@
 @using BloodBank.WEB.Repositories 
 
 @using BloodBank.WEB.Shared 
+@using Microsoft.AspNetCore.Authorization
 
   
 
@@ -21,6 +22,7 @@
 @inject SweetAlertService swal 
 
   
+@attribute [Authorize(Roles = "Admin")]
 
 <h3>ENFERMERO</h3> 
 

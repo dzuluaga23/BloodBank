@@ -16,6 +16,11 @@
                 <i class='icono bx bxs-home'></i> Home
             </NavLink>
         </div>
+        
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+        
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="donantes">
                 <i class='icono bx bxs-user'></i> Donante
@@ -46,8 +51,11 @@
                 <i class='icono bx bxs-building'></i> Hospital
             </NavLink>
         </div>
+            </Authorized>
+        </AuthorizeView>
     </nav>
 </div>
+
 
 @code {
     private bool collapseNavMenu = true;
