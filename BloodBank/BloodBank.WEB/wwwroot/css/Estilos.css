@@ -10,12 +10,12 @@ main[b-ec7wvz783w] {
 }
 
 .sidebar[b-ec7wvz783w] {
-    background-color: green;
+    background-color: white;
 }
 
 .top-row[b-ec7wvz783w] {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
+    background-color: black;
+    border-bottom: 1px solid black;
     justify-content: flex-end;
     height: 3.5rem;
     display: flex;
@@ -83,7 +83,7 @@ main[b-ec7wvz783w] {
 
 .top-row[b-wa3u0ijr78] {
     height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    background-color: black;
 }
 
 .navbar-brand[b-wa3u0ijr78] {
@@ -126,7 +126,7 @@ main[b-ec7wvz783w] {
     }
 
     .nav-item[b-wa3u0ijr78]  a {
-        color: #d7d7d7;
+        color: red;
         border-radius: 4px;
         height: 3rem;
         display: flex;
@@ -136,12 +136,12 @@ main[b-ec7wvz783w] {
 
 .nav-item[b-wa3u0ijr78]  a.active {
     background-color: rgba(255,255,255,0.37);
-    color: white;
+    color: black;
 }
 
 .nav-item[b-wa3u0ijr78]  a:hover {
     background-color: rgba(255,255,255,0.1);
-    color: white;
+    color: black;
 }
 
 @media (min-width: 641px) {
@@ -160,3 +160,56 @@ main[b-ec7wvz783w] {
         overflow-y: auto;
     }
 }
+
+.icono{
+    font-size: 20px;
+    padding-right:8px;
+    color: black
+}
+
+.iconoTittle {
+    color: red;
+}
+
+.img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius:4px;
+}
+
+section {
+    width: 100%; 
+    padding: 0; 
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 0 15px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px;
+    text-align: center;
+}
+
+    .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 15px;
+    }
+
+    .card p {
+        color: #333;
+        line-height: 1.5;
+    }
