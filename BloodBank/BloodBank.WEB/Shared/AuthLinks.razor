@@ -1,11 +1,16 @@
 ﻿<AuthorizeView>
     <Authorized>
         <span class="usuarioLog">Hola, @context.User.Identity!.Name</span>
-        <a href="Logout" class="nav-link btn btn-link">Cerrar Sesión</a>
+        <a href="Logout" class="nav-link btn btn-primary w-15 text-center py-2 my-2"><i class="icono bx bxs-log-out"></i>Cerrar Sesión</a>
     </Authorized>
     <NotAuthorized>
-        <a href="Register" class="nav-link btn btn-link">Registro</a>
-        <a href="Login" class="nav-link btn btn-link">Iniciar Sesión</a>
+        <a href="Register" class="nav-link btn btn-primary w-15 text-center py-2 my-2">
+            <i class="icono bx bxs-edit-alt"></i> Registro
+        </a>
+        <a href="Login" class="nav-link btn btn-primary w-15 text-center py-2 my-2">
+            <i class="icono bx bxs-log-in"></i> Iniciar Sesión
+        </a>
+
     </NotAuthorized>
 </AuthorizeView>
 

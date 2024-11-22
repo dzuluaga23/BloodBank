@@ -9,68 +9,56 @@
 
 
 <EditForm EditContext="editContext" OnSubmit="OnSubmit">
-
     <DataAnnotationsValidator />
 
-    <div class="mb-3">
+    <div class="container d-flex justify-content-center align-items-center min-vh-75">
+        <div class="w-50">
+            <div class="mb-3">
+                <label>Nombre:</label>
+                <div>
+                    <InputText @bind-Value="Hospital.Nombre" class="form-control" />
+                    <ValidationMessage For="@(() => Hospital.Nombre)" />
+                </div>
+            </div>
 
-        <label>Nombre:</label>
+            <div class="mb-3">
+                <label>Dirección:</label>
+                <div>
+                    <InputText @bind-Value="Hospital.Direccion" class="form-control" />
+                    <ValidationMessage For="@(() => Hospital.Direccion)" />
+                </div>
+            </div>
 
+            <div class="mb-3">
+                <label>Teléfono:</label>
+                <div>
+                    <InputText @bind-Value="Hospital.Telefono" class="form-control" />
+                    <ValidationMessage For="@(() => Hospital.Telefono)" />
+                </div>
+            </div>
 
-        <div>
+            <div class="mb-3">
+                <label>Inventario:</label>
+                <div>
+                    <InputSelect @bind-Value="Hospital.InventarioId" class="form-control">
+                        <option value="">Selecciona un inventario</option>
+                        @foreach (var inventario in Inventarios)
+                        {
+                            <option value="@inventario.Id">@inventario.Tipo</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Hospital.InventarioId)" />
+                </div>
+            </div>
 
-            <!--cambiar el width y el parametro de la clase-->
-
-            <InputText width="30" @bind-Value="Hospital.Nombre" />
-
-            <ValidationMessage For="@(()=> Hospital.Nombre)" />
-
-        </div>
-
-    </div>
-
-    <div class="mb-3">
-
-        <label>Direccion:</label>
-
-        <div>
-
-            <InputText width="30" @bind-Value="Hospital.Direccion" />
-
-            <ValidationMessage For="@(()=> Hospital.Direccion)" />
-
-        </div>
-    </div>
-
-    <div class="mb-3">
-
-        <label>Telefono:</label>
-        <div>
-            <InputText width="40" @bind-Value="Hospital.Telefono" />
-            <ValidationMessage For="@(()=> Hospital.Telefono)" />
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label>Inventario:</label>
-        <div>
-            <InputSelect @bind-Value="Hospital.InventarioId" class="form-control">
-                <option value="">Selecciona un inventario</option>
-                @foreach (var inventario in Inventarios)
-                {
-                    <option value="@inventario.Id">@inventario.Tipo</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => Hospital.InventarioId)" />
+            <div class="mb-3 d-flex justify-content-center gap-3">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+                <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
+            </div>
         </div>
     </div>
-
-
-
-         <button class="btn btn-primary" type="submit">Guardar</button>
-         <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
-
 </EditForm>
+
 
 @code {
 

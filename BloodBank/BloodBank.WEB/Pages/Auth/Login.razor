@@ -8,31 +8,39 @@
 @inject NavigationManager navigationManager
 @inject ILoginService loginService
 
-<h3>Iniciar Sesión</h3>
-
-<EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
-    <DataAnnotationsValidator />
-
-    <div class="row">
-        <div class="col-4">
-            <div class="mb-3">
-                <label>Email:</label>
-                <div>
-                    <InputText class="form-control" @bind-Value="@loginDTO.Email" />
-                    <ValidationMessage For="@(() => loginDTO.Email)" />
-                </div>
-            </div>
-            <div class="mb-3">
-                <label>Contraseña:</label>
-                <div>
-                    <InputText type="password" class="form-control" @bind-Value="@loginDTO.Password" />
-                    <ValidationMessage For="@(() => loginDTO.Password)" />
-                </div>
-            </div>
-            <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+<div class="d-flex justify-content-center align-items-center min-vh-60 mt-4">
+    <div class="card shadow p-4 w-50" style="width:80px;">
+        <!-- Ajustar el ancho aquí -->
+        <h3 class="text-center">Iniciar Sesión</h3>
+        <div class="text-center mb-4">
+            <img src="/images/descarga.png" alt="Usuario" style="width: 80px; height: 80px;" />
         </div>
+        <EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
+            <DataAnnotationsValidator />
+            <div class="mb-3 text-center">
+                <label for="email" class="form-label">Email:</label>
+                <div class="d-flex justify-content-center">
+                    <InputText id="email" class="form-control text-center" style="width: 40%;" @bind-Value="@loginDTO.Email" />
+                </div>
+                <ValidationMessage For="@(() => loginDTO.Email)" />
+            </div>
+            <div class="mb-3 text-center">
+                <label for="password" class="form-label">Contraseña:</label>
+                <div class="d-flex justify-content-center">
+                    <InputText id="password" type="password" class="form-control text-center" style="width: 40%;" @bind-Value="@loginDTO.Password" />
+                </div>
+                <ValidationMessage For="@(() => loginDTO.Password)" />
+            </div>
+            <div class="text-center">
+                <button class="btn" style="width: 20%; background-color: #f8d7da; border-color: #f5c6cb; color: #721c24;" type="submit">Iniciar Sesión</button>
+            </div>
+        </EditForm>
     </div>
-</EditForm>
+</div>
+
+
+
+
 
 @code {
     private LoginDTO loginDTO = new();
