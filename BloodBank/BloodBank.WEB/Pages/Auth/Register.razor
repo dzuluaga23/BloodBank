@@ -83,6 +83,11 @@
                 <ValidationMessage For="@(() => userDTO.PasswordConfirm)" />
             </div>
 
+            <div class="mb-3">
+                <InputImg Label="Foto" ImageSelected="ImageSelected" ImageURL="@imageUrl" />
+            </div>
+
+
             <div class="text-center">
                 <button class="btn" style="width: 20%; background-color: #f8d7da; border-color: #f5c6cb; color: #721c24;" type="submit">Registrar</button>
             </div>
@@ -94,12 +99,17 @@
 
     private UserDTO userDTO = new();
     private string? imageUrl;
+    private bool loading;
 
 
+  
     private async Task CreateUserAsync()
     {
+
+        imageUrl = userDTO.Photo;
+        userDTO.Photo = null;
         userDTO.UserName = userDTO.Email;
-        userDTO.UserType = UserType.Admin;
+        userDTO.UserType = UserType.User;
 
         var responseHttp = await repository.PostAsync<UserDTO>("/api/accounts/CreateUser", userDTO);
         if (responseHttp.Error)
@@ -111,6 +121,12 @@
 
         await sweetAlertService.FireAsync("Confirmación", "Su cuenta ha sido creada con éxito. Se te ha enviado un correo electrónico con las instrucciones para activar tu usuario.", SweetAlertIcon.Info);
         navigationManager.NavigateTo("/");
+    }
+
+    private void ImageSelected(string imagenBase64)
+    {
+        userDTO.Photo = imagenBase64;
+        imageUrl = null;
     }
 
 
