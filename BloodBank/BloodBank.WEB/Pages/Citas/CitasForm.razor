@@ -9,64 +9,69 @@
 <EditForm EditContext="editContext" OnSubmit="OnSubmit">
     <DataAnnotationsValidator />
 
-    <div class="mb-3">
-        <label>Fecha:</label>
-        <div>
-            <InputDate @bind-Value="Cita.Fecha" />
-            <ValidationMessage For="@(()=>Cita.Fecha)" />
+    <!-- Contenedor que centra el formulario -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-75">
+        <div class="w-50">
+            <!-- Formulario -->
+            <div class="mb-3">
+                <label>Fecha:</label>
+                <div>
+                    <InputDate @bind-Value="Cita.Fecha" class="form-control" />
+                    <ValidationMessage For="@(() => Cita.Fecha)" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Hora:</label>
+                <div>
+                    <input type="time" @bind="Cita.Hora" class="form-control" />
+                    <ValidationMessage For="@(() => Cita.Hora)" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Cantidad:</label>
+                <div>
+                    <InputNumber @bind-Value="Cita.Cantidad" class="form-control" />
+                    <ValidationMessage For="@(() => Cita.Cantidad)" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Donante:</label>
+                <div>
+                    <InputSelect @bind-Value="Cita.DonanteId" class="form-control">
+                        <option value="">Selecciona un donante</option>
+                        @foreach (var donante in Donantes)
+                        {
+                            <option value="@donante.Id">@donante.Nombre</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Cita.DonanteId)" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Enfermero:</label>
+                <div>
+                    <InputSelect @bind-Value="Cita.EnfermeroId" class="form-control">
+                        <option value="">Selecciona un enfermero</option>
+                        @foreach (var enfermero in Enfermeros)
+                        {
+                            <option value="@enfermero.Id">@enfermero.Nombre</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Cita.EnfermeroId)" />
+                </div>
+            </div>
+
+            <!-- Botones centrados -->
+            <div class="mb-3 d-flex justify-content-center gap-3">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+                <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
+            </div>
         </div>
     </div>
-
-    <div class="mb-3">
-        <label>Hora:</label>
-        <div>
-            <input type="time" @bind="Cita.Hora" class="form-control" />
-            <ValidationMessage For="@(()=>Cita.Hora)" />
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label>Cantidad:</label>
-        <div>
-            <InputNumber @bind-Value="Cita.Cantidad" />
-            <ValidationMessage For="@(()=>Cita.Cantidad)" />
-        </div>
-    </div>
-
-  
-
-    <div class="mb-3">
-        <label>Donante:</label>
-        <div>
-            <InputSelect @bind-Value="Cita.DonanteId" class="form-control">
-                <option value="">Selecciona un donante</option>
-                @foreach (var donante in Donantes)
-                {
-                    <option value="@donante.Id">@donante.Nombre</option> 
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => Cita.DonanteId)" />
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label>Enfermero:</label>
-        <div>
-            <InputSelect @bind-Value="Cita.EnfermeroId" class="form-control">
-                <option value="">Selecciona un enfermero</option>
-                @foreach (var enfermero in Enfermeros)
-                {
-                    <option value="@enfermero.Id">@enfermero.Nombre</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => Cita.EnfermeroId)" />
-        </div>
-    </div>
-
-    <button class="btn btn-primary" type="submit">Guardar</button>
-    <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
-
-
 </EditForm>
 
 
@@ -88,6 +93,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+
+        Cita.Fecha = Cita.Fecha == default ? DateTime.Today : Cita.Fecha;
         var responseDonantes = await repository.GetDonantesAsync();
         if (!responseDonantes.Error && responseDonantes.Response != null)
         {

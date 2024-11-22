@@ -7,74 +7,64 @@
 
 
 <EditForm EditContext="editContext" OnSubmit="OnSubmit">
-
     <DataAnnotationsValidator />
 
-    <div class="mb-3">
+    <div class="container d-flex justify-content-center align-items-center min-vh-75">
+        <div class="w-50">
+            <div class="mb-3">
+                <label>Documento:</label>
+                <div>
+                    <InputText @bind-Value="Enfermero.Documento" class="form-control" />
+                    <ValidationMessage For="@(() => Enfermero.Documento)" />
+                </div>
+            </div>
 
-        <label>Documento:</label>
+            <div class="mb-3">
+                <label>Nombre:</label>
+                <div>
+                    <InputText @bind-Value="Enfermero.Nombre" class="form-control" />
+                    <ValidationMessage For="@(() => Enfermero.Nombre)" />
+                </div>
+            </div>
 
+            <div class="mb-3">
+                <label>Apellido:</label>
+                <div>
+                    <InputText @bind-Value="Enfermero.Apellido" class="form-control" />
+                    <ValidationMessage For="@(() => Enfermero.Apellido)" />
+                </div>
+            </div>
 
-        <div>
+            <div class="mb-3">
+                <label>Correo:</label>
+                <div>
+                    <InputText @bind-Value="Enfermero.Correo" class="form-control" />
+                    <ValidationMessage For="@(() => Enfermero.Correo)" />
+                </div>
+            </div>
 
-            <!--cambiar el width y el parametro de la clase-->
+            <div class="mb-3">
+                <label>Hospital:</label>
+                <div>
+                    <InputSelect @bind-Value="Enfermero.HospitalId" class="form-control">
+                        <option value="">Selecciona un hospital</option>
+                        @foreach (var hospital in Hospitales)
+                        {
+                            <option value="@hospital.Id">@hospital.Nombre</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Enfermero.HospitalId)" />
+                </div>
+            </div>
 
-            <InputText width="30" @bind-Value="Enfermero.Documento" />
-
-            <ValidationMessage For="@(()=>Enfermero.Documento)" />
-
-        </div>
-
-    </div>
-
-    <div class="mb-3">
-
-        <label>Nombre:</label>
-
-        <div>
-
-            <InputText width="30" @bind-Value="Enfermero.Nombre" />
-
-            <ValidationMessage For="@(()=>Enfermero.Nombre)" />
-
-        </div>
-    </div>
-
-    <div class="mb-3">
-
-        <label>Apellido:</label>
-        <div>
-            <InputText width="40" @bind-Value="Enfermero.Apellido" />
-            <ValidationMessage For="@(()=>Enfermero.Apellido)" />
-        </div>
-    </div>
-    <div class="mb-3">
-        <label>Correo:</label>
-        <div>
-
-            <InputText width="10" @bind-Value="Enfermero.Correo" />
-            <ValidationMessage For="@(()=>Enfermero.Correo)" />
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label>Hospital:</label>
-        <div>
-            <InputSelect @bind-Value="Enfermero.HospitalId" class="form-control">
-                <option value="">Selecciona un hospital</option>
-                @foreach (var hospital in Hospitales)
-                {
-                    <option value="@hospital.Id">@hospital.Nombre</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => Enfermero.HospitalId)" />
+            <div class="mb-3 d-flex justify-content-center gap-3">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+                <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
+            </div>
         </div>
     </div>
-   
-         <button class="btn btn-primary" type="submit">Guardar</button>
-         <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
-
 </EditForm>
+
 
 @code {
 

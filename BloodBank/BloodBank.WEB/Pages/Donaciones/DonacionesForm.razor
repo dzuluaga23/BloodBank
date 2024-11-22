@@ -8,47 +8,55 @@
 <EditForm EditContext="editContext" OnSubmit="OnSubmit">
     <DataAnnotationsValidator />
 
-    <div class="mb-3">
-        <label>Observacion:</label>
-        <div>
-            <InputText @bind-Value="Donacion.Observacion" />
-            <ValidationMessage For="@(()=>Donacion.Observacion)" />
+    
+    <div class="container d-flex justify-content-center align-items-center min-vh-75">
+        <div class="w-50">
+           
+            <div class="mb-3">
+                <label>Observacion:</label>
+                <div>
+                    <InputText @bind-Value="Donacion.Observacion" class="form-control" />
+                    <ValidationMessage For="@(() => Donacion.Observacion)" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Inventario:</label>
+                <div>
+                    <InputSelect @bind-Value="Donacion.InventarioId" class="form-control">
+                        <option value="">Selecciona un inventario</option>
+                        @foreach (var inventario in Inventarios)
+                        {
+                            <option value="@inventario.Id">@inventario.Tipo</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Donacion.InventarioId)" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Cita:</label>
+                <div>
+                    <InputSelect @bind-Value="Donacion.CitaId" class="form-control">
+                        <option value="">Selecciona una cita</option>
+                        @foreach (var cita in Citas)
+                        {
+                            <option value="@cita.Id">@cita.Fecha</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Donacion.CitaId)" />
+                </div>
+            </div>
+
+            
+            <div class="mb-3 d-flex justify-content-center gap-3">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+                <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
+            </div>
         </div>
     </div>
-
-    <div class="mb-3">
-        <label>Inventario:</label>
-        <div>
-            <InputSelect @bind-Value="Donacion.InventarioId" class="form-control">
-                <option value="">Selecciona un inventario</option>
-                @foreach (var inventario in Inventarios)
-                {
-                    <option value="@inventario.Id">@inventario.Tipo</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => Donacion.InventarioId)" />
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label>Cita:</label>
-        <div>
-            <InputSelect @bind-Value="Donacion.CitaId" class="form-control">
-                <option value="">Selecciona una cita</option>
-                @foreach (var cita in Citas)
-                {
-                    <option value="@cita.Id">@cita.Fecha</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => Donacion.CitaId)" />
-        </div>
-    </div>
-
-    <button class="btn btn-primary" type="submit">Guardar</button>
-    <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
-
-
 </EditForm>
+
 
 
 @code {

@@ -7,58 +7,53 @@
 <NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
 
 
-<EditForm EditContext="editContext" OnSubmit="OnSubmit"> 
+<EditForm EditContext="editContext" OnSubmit="OnSubmit">
     <DataAnnotationsValidator />
 
-    <div class="mb-3">
+    <div class="container d-flex justify-content-center align-items-center min-vh-75">
+        <div class="w-50">
+            <div class="mb-3">
+                <label>Código:</label>
+                <div>
+                    <InputNumber @bind-Value="Inventario.Codigo" class="form-control" />
+                    <ValidationMessage For="@(() => Inventario.Codigo)" />
+                </div>
+            </div>
 
-        <label>Codigo:</label>
+            <div class="mb-3">
+                <label>Tipo de Sangre:</label>
+                <div>
+                    <InputSelect @bind-Value="Inventario.Tipo" class="form-control">
+                        <option value="">Selecciona tu tipo de sangre</option>
+                        <option value="1">A+</option>
+                        <option value="2">O+</option>
+                        <option value="3">B+</option>
+                        <option value="4">AB+</option>
+                        <option value="5">A-</option>
+                        <option value="6">O-</option>
+                        <option value="7">B-</option>
+                        <option value="8">AB-</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Inventario.Tipo)" />
+                </div>
+            </div>
 
+            <div class="mb-3">
+                <label>Cantidad:</label>
+                <div>
+                    <InputNumber @bind-Value="Inventario.Cantidad" class="form-control" />
+                    <ValidationMessage For="@(() => Inventario.Cantidad)" />
+                </div>
+            </div>
 
-        <div>
-
-            <!--cambiar el width y el parametro de la clase-->
-
-            <InputNumber width="30" @bind-Value="Inventario.Codigo" />
-
-            <ValidationMessage For="@(()=>Inventario.Codigo)" />
-
-        </div>
-
-    </div>
-
-    <div class="mb-3">
-        <label>Tipo de Sangre:</label>
-        <div>
-            <InputSelect @bind-Value="Inventario.Tipo">
-                <option value="">Selecciona tu tipo de sangre</option>
-                <option value="1">A+</option>
-                <option value="2">O+</option>
-                <option value="3">B+</option>
-                <option value="4">AB+</option>
-                <option value="5">A-</option>
-                <option value="6">O-</option>
-                <option value="7">B-</option>
-                <option value="8">AB-</option>
-
-            </InputSelect>
-            <ValidationMessage For="@(() => Inventario.Tipo)" />
-        </div>
-    </div>
-
-    <div class="mb-3">
-
-        <label>Cantidad:</label>
-        <div>
-            <InputNumber width="40" @bind-Value="Inventario.Cantidad" />
-            <ValidationMessage For="@(()=>Inventario.Cantidad)" />
+            <div class="mb-3 d-flex justify-content-center gap-3">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+                <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
+            </div>
         </div>
     </div>
-
-         <button class="btn btn-primary" type="submit">Guardar</button>
-         <button class="btn btn-success" type="button" @onclick="ReturnAction">Regresar</button>
-
 </EditForm>
+
 
 @code {
 
