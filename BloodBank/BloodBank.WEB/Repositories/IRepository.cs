@@ -20,6 +20,7 @@ namespace BloodBank.WEB.Repositories
         Task<HttpResponseWrapper<List<Hospital>>> GetHospitalesAsync();
         Task<HttpResponseWrapper<List<Inventario>>> GetInventariosAsync();
         Task<HttpResponseWrapper<List<Cita>>> GetCitasAsync();
+        Task<HttpResponseWrapper<object>> Get(string url);
 
 
 
