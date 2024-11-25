@@ -205,8 +205,8 @@ public async Task<ActionResult> ChangePasswordAsync(ChangePasswordDTO model)
             }, HttpContext.Request.Scheme, _configuration["UrlWEB"]);
 
             var response = _mailHelper.SendMail(user.FirstName, user.Email!,
-                $"Veterinarys- Confirmación de cuenta",
-                $"<h1>Veterinary - Confirmación de cuenta</h1>" +
+                $"BloodBanks- Confirmación de cuenta",
+                $"<h1>BloodBank - Confirmación de cuenta</h1>" +
                 $"<p>Para habilitar el usuario, por favor hacer clic 'Confirmar Email':</p>" +
                 $"<b><a href ={tokenLink}>Confirmar Email</a></b>");
 

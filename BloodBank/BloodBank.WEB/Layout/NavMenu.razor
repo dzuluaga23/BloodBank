@@ -16,22 +16,29 @@
                 <i class='icono bx bxs-home'></i> Home
             </NavLink>
         </div>
-        
-        <AuthorizeView Roles="Admin">
+
+
+        <AuthorizeView Roles="Admin,User">
             <Authorized>
-        
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="donantes">
                 <i class='icono bx bxs-user'></i> Donante
             </NavLink>
         </div>
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="citas">
                 <i class='icono bx bxs-spreadsheet'></i> Cita
             </NavLink>
         </div>
-        <div class="nav-item px-3">
+            </Authorized>
+        </AuthorizeView>
+           
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+
+                <div class="nav-item px-3">
             <NavLink class="nav-link" href="donaciones">
                 <i class='icono bx bxs-paper-plane'></i> Donacion
             </NavLink>
@@ -51,7 +58,7 @@
                 <i class='icono bx bxs-building'></i> Hospital
             </NavLink>
         </div>
-            </Authorized>
+             </Authorized> 
         </AuthorizeView>
     </nav>
 </div>
