@@ -49,7 +49,7 @@ builder.Services.AddSwaggerGen(c =>
         });
 });
 
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=DefaultConnection"));
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=AzureConnection"));
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
@@ -101,10 +101,10 @@ void SeedData(WebApplication app)
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    
 }
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
